@@ -34,28 +34,27 @@ ALLOWED_FRONTEND_ORIGINS = [
     if origin.strip()
 ]
 
+
 def create_app(load_model_on_init: bool = True) -> Flask:
     """Application factory for Flask inference API."""
     app = Flask(__name__)
     app.config["MAX_CONTENT_LENGTH"] = MAX_CONTENT_LENGTH
 
+    CORS(
+        app,
+        resources={r"/api/*": {"origins": ALLOWED_FRONTEND_ORIGINS}},
+        methods=["GET", "POST", "OPTIONS"],
+        allow_headers=["Content-Type"]
+    )
 
-# Allow the deployed frontend and local development origins
-CORS(
-    app,
-    resources={r"/api/*": {"origins": ALLOWED_FRONTEND_ORIGINS}},
-    methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type"]
-)
-
-
-    # Attempt to load model on initialization if requested
+    # Load model during application startup if requested
     if load_model_on_init:
         try:
             load_inference_model()
             logger.info("Inference model ready on application startup.")
         except Exception as exc:
             logger.error("Failed to load model on application startup: %s", exc)
+
 
     @app.errorhandler(RequestEntityTooLarge)
     def handle_oversized_request(error):
