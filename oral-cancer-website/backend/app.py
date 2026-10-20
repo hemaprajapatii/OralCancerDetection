@@ -26,14 +26,10 @@ MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10 Megabytes limit
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
 
 ALLOWED_FRONTEND_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        "FRONTEND_ORIGINS",
-        "https://oral-cancer-detection-zcma.vercel.app,http://localhost:5173,http://127.0.0.1:5173"
-    ).split(",")
-    if origin.strip()
+    "https://oral-cancer-detection-zcma.vercel.app",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173"
 ]
-
 
 def create_app(load_model_on_init: bool = True) -> Flask:
     """Application factory for Flask inference API."""
