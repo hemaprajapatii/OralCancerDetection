@@ -6,7 +6,10 @@ import ResultDisplay from './components/ResultDisplay';
 import Disclaimer from './components/Disclaimer';
 import { AlertCircle } from 'lucide-react';
 
-const BACKEND_BASE_URL = 'http://127.0.0.1:5000';
+const BACKEND_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL ||
+  'https://oralcancerdetection-2.onrender.com'
+).replace(/\/$/, '');
 
 export default function App() {
   const [backendStatus, setBackendStatus] = useState({
