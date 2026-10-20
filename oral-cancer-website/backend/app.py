@@ -44,7 +44,7 @@ def create_app(load_model_on_init: bool = True) -> Flask:
         app,
         resources={r"/api/*": {"origins": ALLOWED_FRONTEND_ORIGINS}},
         methods=["GET", "POST", "OPTIONS"],
-        allow_headers=["Content-Type"]
+        allow_headers=["Content-Type", "Accept", "Authorization", "X-Requested-With"]
     )
 
     # Load model during application startup if requested
