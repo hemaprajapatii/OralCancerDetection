@@ -24,8 +24,15 @@ logger = logging.getLogger(__name__)
 # Constants
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024  # 10 Megabytes limit
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
-ALLOWED_FRONTEND_ORIGIN = "http://localhost:5173"
 
+ALLOWED_FRONTEND_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        "FRONTEND_ORIGINS",
+        "http://localhost:5173,http://127.0.0.1:5173"
+    ).split(",")
+    if origin.strip()
+]
 
 def create_app(load_model_on_init: bool = True) -> Flask:
     """Application factory for Flask inference API."""
