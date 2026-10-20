@@ -39,13 +39,15 @@ def create_app(load_model_on_init: bool = True) -> Flask:
     app = Flask(__name__)
     app.config["MAX_CONTENT_LENGTH"] = MAX_CONTENT_LENGTH
 
-    # Restrict CORS to development frontend origin only
-    CORS(
-        app,
-        resources={r"/api/*": {"origins": [ALLOWED_FRONTEND_ORIGIN]}},
-        methods=["GET", "POST", "OPTIONS"],
-        allow_headers=["Content-Type"]
-    )
+
+# Allow the deployed frontend and local development origins
+CORS(
+    app,
+    resources={r"/api/*": {"origins": ALLOWED_FRONTEND_ORIGINS}},
+    methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"]
+)
+
 
     # Attempt to load model on initialization if requested
     if load_model_on_init:
