@@ -8,7 +8,7 @@ import { AlertCircle } from 'lucide-react';
 
 const BACKEND_BASE_URL = (
   import.meta.env.VITE_API_BASE_URL ||
-  'https://oralcancerdetection-2.onrender.com'
+  'https://oralcancerdetection-xb07.onrender.com'
 ).replace(/\/$/, '');
 
 export default function App() {
