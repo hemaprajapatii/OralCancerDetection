@@ -38,9 +38,17 @@ def create_app(load_model_on_init: bool = True) -> Flask:
 
     CORS(
         app,
-        resources={r"/api/*": {"origins": ALLOWED_FRONTEND_ORIGINS}},
+        resources={r"/api/*": {
+            "origins": [
+                "https://oral-cancer-detection-zcma.vercel.app",
+                "http://localhost:5173",
+                "http://127.0.0.1:5173"
+            ],
+            "origin_validator": lambda origin: origin.endswith(".vercel.app") or origin.startswith("http://localhost:")
+        }},
         methods=["GET", "POST", "OPTIONS"],
-        allow_headers=["Content-Type", "Accept", "Authorization", "X-Requested-With"]
+        allow_headers=["Content-Type", "Accept", "Authorization", "X-Requested-With"],
+        supports_credentials=True
     )
 
     # Load model during application startup if requested
